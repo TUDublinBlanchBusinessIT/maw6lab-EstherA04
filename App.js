@@ -21,6 +21,21 @@ export default function App() {
     Alert.alert("UUID=" + uuid); 
   }
 
+  async function getData() {
+    Alert.alert("Get Data button was clicked");
+    try {
+      let thisBooking = await AsyncStorage.getItem(uuid);
+      if (thisBooking) {
+        const bookingData = JSON.parse(thisBooking);
+        Alert.alert(bookingData.movieTitle); 
+      } else {
+        Alert.alert("No data found for this UUID");
+      }
+    } catch {
+      Alert.alert("Error getting data");
+    }
+  }
+
   return (
     <View style={styles.screencontainer}>
       <View style={styles.imgview}>
@@ -32,6 +47,9 @@ export default function App() {
       </Swiper>
       <TouchableOpacity style={styles.button} onPress={saveData}>
         <Text style={{ fontSize: 24, fontWeight: "bold" }}>Save Data</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={getData}>
+        <Text style={{ fontSize: 24, fontWeight: "bold" }}>Get Data</Text>
       </TouchableOpacity>
     </View>
   );
